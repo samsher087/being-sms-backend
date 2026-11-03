@@ -2,13 +2,12 @@
   "name": "softdeals-sms-backend",
   "version": "1.0.0",
   "description": "SoftDeals School Management System - Multi-Tenant Backend API",
-  "main": "dist/server.js",
+  "main": "server.js",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
-    "build": "tsc",
-    "start": "node dist/server.js",
-    "seed": "ts-node src/scripts/seed.ts",
-    "test": "ts-node src/scripts/test-runner.ts"
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "seed": "node scripts/seed.js",
+    "test": "node scripts/test-runner.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

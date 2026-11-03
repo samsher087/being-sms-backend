@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const timetableController_1 = require("../controllers/timetableController");
+const auth_1 = require("../middleware/auth");
+const router = (0, express_1.Router)();
+router.use(auth_1.authenticateUser);
+router.get('/class/:classId', timetableController_1.getClassTimetable);
+router.post('/class/:classId', (0, auth_1.requireRoles)('SUPER_ADMIN', 'SCHOOL_ADMIN', 'PRINCIPAL'), timetableController_1.saveClassTimetable);
+router.get('/teacher/:teacherId', timetableController_1.getTeacherTimetable);
+exports.default = router;

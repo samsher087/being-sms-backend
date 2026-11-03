@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const studentController_1 = require("../controllers/studentController");
+const auth_1 = require("../middleware/auth");
+const router = (0, express_1.Router)();
+router.use(auth_1.authenticateUser);
+router.get('/', (0, auth_1.requireRoles)('SUPER_ADMIN', 'SCHOOL_ADMIN', 'PRINCIPAL', 'TEACHER', 'ACCOUNTANT'), studentController_1.listStudents);
+router.get('/:id', studentController_1.getStudentById);
+router.post('/', (0, auth_1.requireRoles)('SUPER_ADMIN', 'SCHOOL_ADMIN', 'PRINCIPAL'), studentController_1.createStudent);
+router.put('/:id', (0, auth_1.requireRoles)('SUPER_ADMIN', 'SCHOOL_ADMIN', 'PRINCIPAL'), studentController_1.updateStudent);
+router.post('/bulk-import', (0, auth_1.requireRoles)('SUPER_ADMIN', 'SCHOOL_ADMIN'), studentController_1.bulkImportStudents);
+exports.default = router;

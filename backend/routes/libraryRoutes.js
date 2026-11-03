@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const libraryController_1 = require("../controllers/libraryController");
+const auth_1 = require("../middleware/auth");
+const router = (0, express_1.Router)();
+router.use(auth_1.authenticateUser);
+router.get('/books', libraryController_1.listBooks);
+router.post('/books', (0, auth_1.requireRoles)('SUPER_ADMIN', 'SCHOOL_ADMIN'), libraryController_1.createBook);
+router.post('/issue', (0, auth_1.requireRoles)('SUPER_ADMIN', 'SCHOOL_ADMIN'), libraryController_1.issueBook);
+router.post('/return/:id', (0, auth_1.requireRoles)('SUPER_ADMIN', 'SCHOOL_ADMIN'), libraryController_1.returnBook);
+router.get('/issues', libraryController_1.listBookIssues);
+exports.default = router;

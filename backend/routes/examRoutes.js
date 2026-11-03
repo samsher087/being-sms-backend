@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const examController_1 = require("../controllers/examController");
+const auth_1 = require("../middleware/auth");
+const router = (0, express_1.Router)();
+router.use(auth_1.authenticateUser);
+router.get('/schedules', examController_1.listExamSchedules);
+router.post('/schedules', (0, auth_1.requireRoles)('SUPER_ADMIN', 'SCHOOL_ADMIN', 'PRINCIPAL'), examController_1.createExamSchedule);
+router.post('/marks', (0, auth_1.requireRoles)('SUPER_ADMIN', 'SCHOOL_ADMIN', 'PRINCIPAL', 'TEACHER'), examController_1.submitStudentMarks);
+router.get('/report-card/:examId/:studentId', examController_1.getStudentReportCard);
+router.get('/results/:examId/:classId', (0, auth_1.requireRoles)('SUPER_ADMIN', 'SCHOOL_ADMIN', 'PRINCIPAL', 'TEACHER'), examController_1.getClassResults);
+exports.default = router;
